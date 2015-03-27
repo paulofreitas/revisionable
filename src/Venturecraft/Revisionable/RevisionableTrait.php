@@ -119,7 +119,7 @@ trait RevisionableTrait
                     'key'                   => $key,
                     'old_value'             => array_get($this->originalData, $key),
                     'new_value'             => $this->updatedData[$key],
-                    'user_id'               => $this->getUserId(),
+                    'user_id'               => $this->getAuthUserId(),
                     'created_at'            => new \DateTime(),
                     'updated_at'            => new \DateTime(),
                 );
@@ -149,7 +149,7 @@ trait RevisionableTrait
                 'key' => 'deleted_at',
                 'old_value' => null,
                 'new_value' => $this->deleted_at,
-                'user_id' => $this->getUserId(),
+                'user_id' => $this->getAuthUserId(),
                 'created_at' => new \DateTime(),
                 'updated_at' => new \DateTime(),
             );
@@ -162,7 +162,7 @@ trait RevisionableTrait
      * Attempt to find the user id of the currently logged in user
      * Supports Cartalyst Sentry/Sentinel based authentication, as well as stock Auth
      **/
-    public function getUserId()
+    public function getAuthUserId()
     {
         try {
             if (class_exists($class = '\Cartalyst\Sentry\Facades\Laravel\Sentry')
